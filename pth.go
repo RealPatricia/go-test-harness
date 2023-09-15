@@ -22,7 +22,7 @@ func Run[T, U any](tests []Test[T, U], f func(in T) U, t *testing.T) {
 		name := test.Name
 		t.Run(name, func(t *testing.T) {
 			result := f(test.Input)
-			if !reflect.DeepEqual(test.Expecting, result) {
+			if test.Success != reflect.DeepEqual(test.Expecting, result) {
 				t.Errorf(err(test.Expecting, result))
 			}
 		})
