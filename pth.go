@@ -28,3 +28,34 @@ func Run[T, U any](tests []Test[T, U], f func(in T) U, t *testing.T) {
 		})
 	}
 }
+
+func SanityTest(t *testing.T) {
+	if 2+2 != 4 {
+		t.Errorf("Sorry folks, math's closed, moose out front should have told ya")
+	}
+
+	type in struct {
+		l, r int
+	}
+
+	tests := []Test[in, int]{
+		{
+			Name:      "five",
+			Input:     in{2, 3},
+			Expecting: 5,
+			Success:   true,
+		},
+		{
+			Name:      "seven",
+			Input:     in{2, 3},
+			Expecting: 7,
+			Success:   false,
+		},
+	}
+
+	f := func(val in) int {
+		return val.l + val.r
+	}
+
+	Run(tests, f, t)
+}
