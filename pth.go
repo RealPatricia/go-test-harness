@@ -2,7 +2,7 @@ package pth
 
 import (
 	"fmt"
-	"reflect"
+	"github.com/RealPatricia/pth/assert"
 	"testing"
 )
 
@@ -22,7 +22,7 @@ func Run[T, U any](tests []Test[T, U], f func(in T) U, t *testing.T) {
 		name := test.Name
 		t.Run(name, func(t *testing.T) {
 			result := f(test.Input)
-			if test.Success != reflect.DeepEqual(test.Expecting, result) {
+			if !assert.Equal(result, test.Expecting, test.Success) {
 				t.Errorf(err(test.Expecting, result))
 			}
 		})
